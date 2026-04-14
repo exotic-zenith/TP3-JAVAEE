@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{events.title}">Evenements</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header>
+    <div>
+        <a th:href="@{/}" th:text="#{app.name}">Events Portal</a>
+        <span th:if="${displayName}" th:text="' - ' + #{label.hello} + ' ' + ${displayName}"></span>
+    </div>
+    <div class="lang-switch">
+        <a th:href="@{/events(lang='fr', q=${query})}">FR</a>
+        <a th:href="@{/events(lang='en', q=${query})}">EN</a>
+        <a th:href="@{/events(lang='ar', q=${query})}">AR</a>
+        <form th:action="@{/logout}" method="post" class="logout-form">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            <button type="submit" class="logout-link" th:text="#{nav.logout}">Deconnexion</button>
+        </form>
+    </div>
+</header>
+
+<div class="container">
+    <h2 th:text="#{events.heading}">Recherche des evenements</h2>
+
+    <form th:action="@{/events}" method="get" class="search-row">
+        <input name="q" th:value="${query}" th:placeholder="#{events.search.placeholder}">
+        <button type="submit" th:text="#{events.search.button}">Rechercher</button>
+    </form>
+
+    <p th:if="${#lists.isEmpty(events)}" th:text="#{events.none}">Aucun resultat.</p>
+
+    <div class="event-card" th:each="event : ${events}">
+        <h3 th:text="${event.title}">Titre</h3>
+        <p th:text="${event.description}">Description</p>
+        <p>
+            <strong th:text="#{label.category}">Categorie:</strong>
+            <span th:text="${event.category}">Conference</span>
+        </p>
+        <p>
+            <strong th:text="#{label.location}">Lieu:</strong>
+            <span th:text="${event.location}">Salle A</span>
+        </p>
+        <p>
+            <strong th:text="#{label.date}">Date:</strong>
+            <span th:text="${event.eventDate}">2026-01-01</span>
+        </p>
+    </div>
+</div>
+</body>
+</html>
+
