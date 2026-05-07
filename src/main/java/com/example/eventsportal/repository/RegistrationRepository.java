@@ -5,6 +5,7 @@ import com.example.eventsportal.model.StudentEvent;
 import com.example.eventsportal.model.UserAccount;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface RegistrationRepository extends JpaRepository<Registration, Long> {
@@ -13,6 +14,7 @@ public interface RegistrationRepository extends JpaRepository<Registration, Long
 
     List<Registration> findByUserOrderByRegisteredAtDesc(UserAccount user);
 
+    @Modifying
     @Transactional
     void deleteByUserAndEvent(UserAccount user, StudentEvent event);
 }
