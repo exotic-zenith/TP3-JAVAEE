@@ -29,6 +29,7 @@
 
     <div sec:authorize="isAuthenticated()">
         <a th:href="@{/events}" th:text="#{nav.events}">Evenements</a> |
+        <a th:href="@{/my-registrations}" th:text="#{nav.myregistrations}">My Registrations</a> |
         <form th:action="@{/logout}" method="post" class="logout-form">
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
             <button type="submit" class="logout-link" th:text="#{nav.logout}">Deconnexion</button>

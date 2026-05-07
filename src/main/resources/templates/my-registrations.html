@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{myregistrations.title}">My Registrations</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<header>
+    <div>
+        <a th:href="@{/}" th:text="#{app.name}">Events Portal</a>
+    </div>
+    <div class="lang-switch">
+        <a th:href="@{/my-registrations(lang='fr')}">FR</a>
+        <a th:href="@{/my-registrations(lang='en')}">EN</a>
+        <a th:href="@{/my-registrations(lang='ar')}">AR</a>
+        <form th:action="@{/logout}" method="post" class="logout-form">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            <button type="submit" class="logout-link" th:text="#{nav.logout}">Logout</button>
+        </form>
+    </div>
+</header>
+
+<div class="container">
+    <h2 th:text="#{myregistrations.heading}">My Registrations</h2>
+
+    <p th:if="${#lists.isEmpty(registrations)}" th:text="#{myregistrations.none}">No registrations yet.</p>
+
+    <div class="event-card" th:each="registration : ${registrations}">
+        <h3 th:text="${registration.event.title}">Event Title</h3>
+        <p>
+            <strong th:text="#{label.location}">Location:</strong>
+            <span th:text="${registration.event.location}">Location</span>
+        </p>
+        <p>
+            <strong th:text="#{label.date}">Date:</strong>
+            <span th:text="${registration.event.eventDate}">2026-01-01</span>
+        </p>
+        <p>
+            <small th:text="'Registered: ' + ${#dates.format(registration.registeredAt, 'dd/MM/yyyy HH:mm')}">Registered: 01/01/2026 12:00</small>
+        </p>
+    </div>
+
+    <a th:href="@{/events}" th:text="#{nav.events}">Back to Events</a>
+</div>
+</body>
+</html>
+

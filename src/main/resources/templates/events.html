@@ -15,6 +15,7 @@
         <a th:href="@{/events(lang='fr', q=${query})}">FR</a>
         <a th:href="@{/events(lang='en', q=${query})}">EN</a>
         <a th:href="@{/events(lang='ar', q=${query})}">AR</a>
+        <a th:href="@{/my-registrations}" th:text="#{nav.myregistrations}">My Registrations</a>
         <form th:action="@{/logout}" method="post" class="logout-form">
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
             <button type="submit" class="logout-link" th:text="#{nav.logout}">Deconnexion</button>
@@ -47,6 +48,16 @@
             <strong th:text="#{label.date}">Date:</strong>
             <span th:text="${event.eventDate}">2026-01-01</span>
         </p>
+        <div>
+            <form th:if="${registeredEventIds.contains(event.id)}" th:action="@{'/events/' + ${event.id} + '/unregister'}" method="post" style="display:inline;">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                <button type="submit" th:text="#{events.unregister.button}" class="btn-unregister">Unregister</button>
+            </form>
+            <form th:if="${!registeredEventIds.contains(event.id)}" th:action="@{'/events/' + ${event.id} + '/register'}" method="post" style="display:inline;">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                <button type="submit" th:text="#{events.register.button}" class="btn-register">Register</button>
+            </form>
+        </div>
     </div>
 </div>
 </body>
